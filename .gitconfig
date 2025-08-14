@@ -1,0 +1,7 @@
+[user]
+	name = Dave
+	email = khourydave16@gmail.com
+[init]
+	defaultBranch = main
+[credential]
+	helper = manager

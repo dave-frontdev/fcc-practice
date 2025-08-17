@@ -1,41 +1,59 @@
-/* ---- Fun Paragraph Page Styles ---- */
+/* ---- Super Color Explosion Styles ---- */
 
-/* Optional: nice defaults */
 * { box-sizing: border-box; }
 
-:root{
-  --bg1: #ffecd2;
-  --bg2: #fcb69f;
-  --text: #333333;
-  --accent: #ff4b5c;
-  --card-bg: rgba(255,255,255,0.7);
+:root {
+  --bg1: #ffecd2;    /* peach */
+  --bg2: #fcb69f;    /* orange-pink */
+  --bg3: #ff9a9e;    /* pink */
+  --bg4: #fad0c4;    /* pastel orange */
+  --bg5: #a1c4fd;    /* light blue */
+  --bg6: #c2e9fb;    /* aqua */
+  --text: #222;
+  --accent1: #ff4b5c; /* red-pink */
+  --accent2: #6a5acd; /* slate blue */
+  --accent3: #ffdd59; /* bright yellow */
+  --accent4: #00b894; /* teal green */
+  --accent5: #ff7675; /* coral red */
+  --card-bg: rgba(255,255,255,0.8);
   --shadow: 0 6px 18px rgba(0,0,0,0.12);
-}
-
-html, body {
-  height: 100%;
 }
 
 body {
   margin: 0;
   padding: 24px;
-  font-family: "Comic Sans MS", "Comic Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
   color: var(--text);
-  background: linear-gradient(120deg, var(--bg1), var(--bg2));
-  background-attachment: fixed;
+  background: linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3), var(--bg4), var(--bg5), var(--bg6));
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
 }
 
-/* Header */
+/* Moving gradient background */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 h1 {
   margin: 0 auto 20px;
   text-align: center;
-  color: var(--accent);
-  text-shadow: 2px 2px #ffe5d9;
-  letter-spacing: 0.5px;
-  line-height: 1.2;
+  color: var(--accent1);
+  text-shadow: 2px 2px var(--accent3);
+  letter-spacing: 1px;
+  animation: rainbowText 3s linear infinite;
 }
 
-/* Paragraph cards */
+/* Changing header colors */
+@keyframes rainbowText {
+  0% { color: var(--accent1); }
+  25% { color: var(--accent2); }
+  50% { color: var(--accent4); }
+  75% { color: var(--accent5); }
+  100% { color: var(--accent1); }
+}
+
 p {
   background: var(--card-bg);
   padding: 16px 18px;
@@ -46,35 +64,24 @@ p {
   font-size: 1.1rem;
   line-height: 1.65;
   backdrop-filter: blur(2px);
+  border-left: 6px solid var(--accent4);
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
 }
 
-/* Highlight helper */
+p:nth-child(2) { border-color: var(--accent2); }
+p:nth-child(3) { border-color: var(--accent3); }
+p:nth-child(4) { border-color: var(--accent5); }
+
+p:hover {
+  transform: scale(1.03);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+  border-color: var(--accent1);
+}
+
 .highlight {
-  background: #fff176; /* soft yellow */
+  background: var(--accent3);
+  color: var(--accent2);
   font-weight: 700;
   padding: 0 6px;
   border-radius: 6px;
-}
-
-/* Small interactive flourish on hover */
-p:hover {
-  transform: translateY(-1px);
-  transition: transform 160ms ease, box-shadow 160ms ease;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
-}
-
-/* Make it look great on phones */
-@media (max-width: 480px) {
-  body { padding: 16px; }
-  p { font-size: 1rem; padding: 14px 16px; }
-  h1 { font-size: 1.6rem; }
-}
-
-/* Respect user’s dark mode (optional) */
-@media (prefers-color-scheme: dark) {
-  :root{
-    --text: #1b1b1b;
-    --card-bg: rgba(255,255,255,0.86);
-  }
-  body { color: #111; }
 }

@@ -1,29 +1,271 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fun HTML Paragraphs</title>
-<link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Schedex‑style Landing Page (Clone-Friendly)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      /* A clean, modern palette inspired by the site (not identical) */
+      --bg:#0b1020;          /* deep navy background */
+      --card:#12182b;       /* slightly lighter panels */
+      --muted:#aab3c5;      /* subdued text */
+      --text:#e9eefc;       /* main text */
+      --brand:#6aa6ff;      /* primary accent */
+      --brand-2:#7df0c6;    /* secondary accent */
+      --ring:rgba(122,169,255,.45);
+      --maxw:1120px;
+      --radius:18px;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      color:var(--text); background:radial-gradient(1200px 600px at 80% -10%, rgba(106,166,255,.15), transparent 60%),
+                         radial-gradient(900px 450px at 10% 0%, rgba(125,240,198,.10), transparent 55%), var(--bg);
+      line-height:1.55;
+    }
+    a{color:inherit; text-decoration:none}
+    .container{max-width:var(--maxw); margin:0 auto; padding:0 20px}
+
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(10px);
+      background:linear-gradient(180deg, rgba(11,16,32,.9), rgba(11,16,32,.65));
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .nav{display:flex; align-items:center; justify-content:space-between; height:68px}
+    .brand{display:flex; gap:10px; align-items:center}
+    .logo{width:32px; height:32px; border-radius:10px; background:linear-gradient(135deg,var(--brand),var(--brand-2)); box-shadow:0 4px 16px var(--ring)}
+    .brand b{font-weight:800; letter-spacing:.4px}
+    .nav a{opacity:.9}
+    .nav-links{display:flex; gap:20px; align-items:center}
+    .btn{display:inline-flex; align-items:center; justify-content:center; gap:.5rem; border-radius:12px; padding:.8rem 1rem; font-weight:600}
+    .btn-primary{background:linear-gradient(135deg,var(--brand), #3d7cff); color:#071127; box-shadow:0 8px 30px rgba(106,166,255,.35)}
+    .btn-ghost{border:1px solid rgba(255,255,255,.12); color:var(--text); background:transparent}
+
+    /* Hero */
+    .hero{padding:clamp(60px, 10vw, 120px) 0 56px}
+    .hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:36px; align-items:center}
+    .eyebrow{display:inline-block; font-size:.85rem; letter-spacing:.18em; text-transform:uppercase; color:var(--brand-2); background:rgba(125,240,198,.08); border:1px solid rgba(125,240,198,.25); padding:.35rem .6rem; border-radius:999px}
+    h1{font-size:clamp(32px, 5vw, 54px); line-height:1.08; margin:14px 0 10px}
+    .lede{font-size:1.1rem; color:var(--muted); max-width:52ch}
+    .cta-row{display:flex; gap:12px; margin-top:22px; flex-wrap:wrap}
+    .hero-card{background:linear-gradient(180deg, rgba(18,24,43,.9), rgba(18,24,43,.6)); border:1px solid rgba(255,255,255,.08); padding:20px; border-radius:var(--radius); box-shadow:var(--shadow)}
+    .dash{
+      width:100%; aspect-ratio:16/10; border-radius:14px; background:radial-gradient(220px 120px at 20% 25%, rgba(106,166,255,.22), transparent 60%),
+                  radial-gradient(220px 120px at 85% 65%, rgba(125,240,198,.18), transparent 60%),
+                  linear-gradient(180deg, #0c1224, #0b1020);
+      border:1px solid rgba(255,255,255,.06);
+      position:relative; overflow:hidden
+    }
+    .dash:after{content:""; position:absolute; inset:0; background:repeating-linear-gradient( to right, transparent 0 24px, rgba(255,255,255,.04) 24px 25px)}
+
+    /* Badges row */
+    .badges{display:flex; gap:18px; flex-wrap:wrap; align-items:center; margin-top:20px; opacity:.9}
+    .badge{padding:.45rem .7rem; border-radius:999px; background:#0e1530; border:1px solid rgba(255,255,255,.08); color:var(--muted); font-size:.9rem}
+
+    /* Feature grid */
+    .section{padding:64px 0}
+    .section h2{font-size:clamp(26px, 3.6vw, 40px); margin:0 0 18px}
+    .kicker{color:var(--brand); font-weight:700; letter-spacing:.08em; text-transform:uppercase; font-size:.8rem}
+    .grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:18px}
+    .card{background:var(--card); border:1px solid rgba(255,255,255,.08); padding:22px; border-radius:var(--radius); box-shadow:var(--shadow)}
+    .card h3{margin:0 0 8px; font-size:1.05rem}
+    .card p{margin:0; color:var(--muted)}
+
+    /* Case studies */
+    .cases{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+    .case{border-radius:var(--radius); overflow:hidden; border:1px solid rgba(255,255,255,.08); background:linear-gradient(180deg, #101735, #0b1126)}
+    .case .media{aspect-ratio:16/9; background:linear-gradient(120deg, rgba(106,166,255,.25), rgba(125,240,198,.15)); border-bottom:1px solid rgba(255,255,255,.08)}
+    .case .copy{padding:16px 18px}
+    .case small{color:var(--muted)}
+
+    /* Testimonials (pure CSS slider) */
+    .slider{position:relative; overflow:hidden; border-radius:var(--radius); border:1px solid rgba(255,255,255,.08); background:var(--card)}
+    .slides{display:flex; width:300%; transition:transform .6s ease}
+    input[type=radio]{display:none}
+    #t2:checked ~ .slides{transform:translateX(-33.3333%)}
+    #t3:checked ~ .slides{transform:translateX(-66.6666%)}
+    .slide{flex:0 0 100%; padding:26px}
+    .who{margin-top:10px; font-weight:700}
+    .dots{display:flex; gap:8px; justify-content:center; padding:12px}
+    .dot{width:10px; height:10px; border-radius:999px; border:2px solid var(--brand); opacity:.6}
+    label[for=t1]:hover, label[for=t2]:hover, label[for=t3]:hover{opacity:1}
+
+    /* FAQ */
+    details{background:var(--card); border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:14px 16px}
+    details+details{margin-top:12px}
+    summary{cursor:pointer; font-weight:600}
+    details p{color:var(--muted); margin:10px 0 0}
+
+    /* Footer */
+    footer{border-top:1px solid rgba(255,255,255,.07); padding:24px 0 60px; color:var(--muted)}
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-grid{grid-template-columns:1fr}
+      .grid, .cases{grid-template-columns:1fr}
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <b>Schedex</b>
+      </div>
+      <nav class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#cases">Case Studies</a>
+        <a href="#faq">FAQ</a>
+        <a href="#get" class="btn btn-ghost">Get Schedex</a>
+        <a href="#demo" class="btn btn-primary">Watch Demo</a>
+      </nav>
+    </div>
+  </header>
 
-    <h1>Welcome to Paragraph Page</h1>
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">For Restaurants & Cafés</span>
+          <h1>Save at least 15% on your labor costs</h1>
+          <p class="lede">Schedule, manage, and report on all your staff operations — in one platform. Simple enough for your first branch, powerful enough for your 23rd.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#get">Get superpowers</a>
+            <a class="btn btn-ghost" href="#demo">Watch Demo</a>
+          </div>
+          <div class="badges">
+            <span class="badge">Real‑time attendance</span>
+            <span class="badge">Payroll in minutes</span>
+            <span class="badge">Multi‑branch</span>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="dash" role="img" aria-label="Analytics preview"></div>
+        </div>
+      </div>
+    </section>
 
-    <p>
-        Hey there! This is my <span class="highlight">first paragraph</span> in HTML.  
-     just a few lines of code can bring colors and style to life
-    </p>
+    <section id="features" class="section">
+      <div class="container">
+        <div class="kicker">Scheduling • Operations • Reporting</div>
+        <h2>Everything you need to run smarter shifts</h2>
+        <div class="grid">
+          <article class="card"><h3>Smart Scheduling</h3><p>Balance preferences, labor rules, and forecasted demand—auto‑generate fair rosters in one click.</p></article>
+          <article class="card"><h3>Time & Attendance</h3><p>Clock‑ins with location checks and real‑time exceptions to keep coverage tight and costs lower.</p></article>
+          <article class="card"><h3>Reporting & Payroll</h3><p>Centralize all schedule and attendance data—export payroll by branch or employee in seconds.</p></article>
+        </div>
+      </div>
+    </section>
 
-    <p> 
-        Put it all together website!
-    </p>
+    <section id="cases" class="section">
+      <div class="container">
+        <div class="kicker">Proof</div>
+        <h2>Case studies</h2>
+        <div class="cases">
+          <article class="case">
+            <div class="media"></div>
+            <div class="copy">
+              <strong>Clock Café</strong>
+              <small>Slashed labor costs across 20 locations.</small>
+            </div>
+          </article>
+          <article class="case">
+            <div class="media"></div>
+            <div class="copy">
+              <strong>Butler’s & Co</strong>
+              <small>Payroll time reduced from 3 days to 30 minutes.</small>
+            </div>
+          </article>
+          <article class="case">
+            <div class="media"></div>
+            <div class="copy">
+              <strong>Millennium Hotels</strong>
+              <small>Increased casual labor sign‑ups with mobile flows.</small>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
 
-    <p>
-       Keep coding, keep experimenting, and remember:  
-        <strong>Good coding comes from practice</strong>
-    </p>
+    <section class="section">
+      <div class="container">
+        <div class="kicker">Words from Operators</div>
+        <h2>What our partners say</h2>
+        <div class="slider">
+          <input id="t1" name="testi" type="radio" checked>
+          <input id="t2" name="testi" type="radio">
+          <input id="t3" name="testi" type="radio">
+          <div class="slides">
+            <div class="slide">
+              <p>“It’s what every F&B HR dreams of—flexible scheduling, real‑time attendance, total control without complexity.”</p>
+              <div class="who">Director of Operations</div>
+            </div>
+            <div class="slide">
+              <p>“I cut labor costs by over 15% in one month while gaining full visibility across operations.”</p>
+              <div class="who">Owner, Café Group</div>
+            </div>
+            <div class="slide">
+              <p>“Fastest onboarding we’ve seen—seamless staff transfers, payroll integration, and multi‑branch visibility.”</p>
+              <div class="who">Owner, Dessert Chain</div>
+            </div>
+          </div>
+          <div class="dots">
+            <label class="dot" for="t1" title="1"></label>
+            <label class="dot" for="t2" title="2"></label>
+            <label class="dot" for="t3" title="3"></label>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <section id="faq" class="section">
+      <div class="container">
+        <div class="kicker">FAQ</div>
+        <h2>Common questions</h2>
+        <details>
+          <summary>Do you provide a free trial?</summary>
+          <p>Yes—get hands‑on access and see how much you can save. We’ll help you migrate and set up your first schedule.</p>
+        </details>
+        <details>
+          <summary>How do you charge?</summary>
+          <p>Simple per‑employee pricing with volume discounts for groups and franchises.</p>
+        </details>
+        <details>
+          <summary>Is it a mobile app or a web app?</summary>
+          <p>Both. Operators get a web dashboard; staff use iOS/Android to view schedules, clock in/out, and request changes.</p>
+        </details>
+      </div>
+    </section>
+
+    <section id="get" class="section">
+      <div class="container">
+        <div class="card" style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap">
+          <div>
+            <div class="kicker">Ready?</div>
+            <h2 style="margin:6px 0 0">Become the hero. Save the day.</h2>
+          </div>
+          <a class="btn btn-primary" href="#">Get superpowers</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container" style="display:flex; flex-wrap:wrap; gap:14px; align-items:center; justify-content:space-between">
+      <div>© 2025 Schedex — Demo clone for learning</div>
+      <nav style="display:flex; gap:14px">
+        <a href="#features">Scheduling & Planning</a>
+        <a href="#">Staff Operations</a>
+        <a href="#">Reporting & Payroll</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </div>
+  </footer>
 </body>
 </html>
-
